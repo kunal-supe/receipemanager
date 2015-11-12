@@ -11,11 +11,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151107052635) do
+ActiveRecord::Schema.define(version: 20151112021222) do
 
   create_table "chefs", force: :cascade do |t|
     t.string   "chefname"
     t.string   "email"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "likes", force: :cascade do |t|
+    t.boolean  "like"
+    t.integer  "chef_id"
+    t.integer  "recipe_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -28,6 +36,7 @@ ActiveRecord::Schema.define(version: 20151107052635) do
     t.datetime "updated_at"
     t.integer  "chef_id"
     t.string   "picture"
+    t.integer  "total_likes"
   end
 
 end
