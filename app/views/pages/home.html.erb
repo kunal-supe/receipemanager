@@ -3,7 +3,9 @@
   <h2>
    <p class="lead">  This is page for professional ruby course & app as receipe manager. </p>
   </h2>
-  <%= link_to "Sign-up now!", "", class: "btn btn-lg btn-success" %>
+  <% if !logged_in? %>
+  <%= link_to "Sign-up now!", register_path, class: "btn btn-lg btn-success" %>
+  <% end %>
 </div>
 
 <div class="row">
@@ -17,15 +19,17 @@
     <p><%= link_to "Browse Receipe Listing",recipes_path, class:"btn btn-warning btn-small" %></p>
   </div>
   
+  <% if !logged_in? %>
    <div class="col-lg-4">
     <h3 class="mid-row">
-      View receipes as guest user
+      Sign in to your account
     </h3>
     <h2 class="left">
-      Browse receipe and sign up later!
+      Add update your recipes!/Create views/ & much more
     </h2>
-    <p><%= link_to "Browse Receipe Listing", "", class:"btn btn-warning btn-small" %></p>
+    <p><%= link_to "Log in to your account", login_path, class:"btn btn-warning btn-small" %></p>
   </div>
+  <% end %>
   
    <div class="col-lg-4">
     <h3 class="mid-row">
