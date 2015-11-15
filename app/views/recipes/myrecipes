@@ -1,11 +1,33 @@
 <%= render 'shared/page_title', title: "My Recipes" %>
 
+<ul class="nav nav-tabs">
+  <li>
+    <%= link_to "Recipes", recipes_path %>
+  </li>
+  <li>
+    <%= link_to "Chefs", chefs_path %>
+  </li>
+  <% if logged_in? %>
+  <li class="active">
+    <%= link_to "My Recipes", myrecipes_path %>
+  </li>
+  <% end %>
+</ul>
+
+   <% if @recipes == nil %> 
+       <div class="row">
+          <div class="col-md-2">
+            <section class="chef_info center">
+              <p>No recipes were created. Create <%= link_to " New Recipe", new_recipe_path  %> </p>
+            </section>
+        </div>
+      </div>
+   <% end %> 
+
 <%= will_paginate %>
 
-<% if @recipes != nil %>
- 
   <% @recipes.each do |recipe| %>
-   
+  
     <div class="row">
       <div class="col-md-2">
         <section class="chef_info center">
@@ -42,13 +64,6 @@
 
 <%= will_paginate %>    
 
-<% else %>
-<div class="row">
-      <div class="col-md-2">
-        <section class="chef_info center">
-          <p>No recipes were created. Create <%= link_to " New Recipe", new_recipe_path  %> </p>
-        </section>
-      </div>
-</div>
 
-<% end %>
+
+

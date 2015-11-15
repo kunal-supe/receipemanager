@@ -7,6 +7,11 @@
   <li>
     <%= link_to "Chefs", chefs_path %>
   </li>
+  <% if logged_in? %>
+  <li>
+    <%= link_to "My Recipes", myrecipes_path %>
+  </li>
+  <% end %>
 </ul>
 
 <%= will_paginate %>
