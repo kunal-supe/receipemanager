@@ -1,20 +1,32 @@
-<%= render 'shared/page_title', title: "All Recipe" %>
+<%= render 'shared/page_title', title: "My Recipes" %>
 
 <ul class="nav nav-tabs">
-  <li class="active">
+  <li>
     <%= link_to "Recipes", recipes_path %>
   </li>
   <li>
     <%= link_to "Chefs", chefs_path %>
   </li>
   <% if logged_in? %>
-  <li>
+  <li class="active">
     <%= link_to "My Recipes", myrecipes_path %>
   </li>
   <% end %>
 </ul>
 
-<%= will_paginate %>
+   <% if @recipes == nil %> 
+       <div class="row">
+          <div class="col-md-2">
+            <section class="chef_info center">
+              <p>No recipes were created. Create <%= link_to " New Recipe", new_recipe_path  %> </p>
+            </section>
+        </div>
+      </div>
+   <% end %> 
+
+
+
+<%= will_paginate @recipes%>
 
 <% @recipes.each do |recipe| %>
   <div class="row">
@@ -28,15 +40,12 @@
     <div class="col-lg-6 well">
        <h4><%= link_to recipe.name, recipe_path(recipe) %></h4>
         <p><%= recipe.summary %></p>
-        
         <% if recipe.styles.any? %>
           <p>Styles: <%= render recipe.styles %></p>
         <% end %>  
-        
-        <% if recipe.ingredients.any? %>  
+        <% if recipe.ingredients.any? %> 
           <p>Ingredients: <%= render recipe.ingredients %></p>
-        <% end %>
-        
+        <% end %>  
         <p>
           <span class="quiet"><small> Created: <%= time_ago_in_words(recipe.created_at)  %> ago, </small></span>
           <span class="quiet"><small> Updated: <%= time_ago_in_words(recipe.updated_at)  %> ago </small></span>
@@ -60,4 +69,4 @@
   </div>  <hr />
 <% end %>
     
-<%= will_paginate %>    
+<%= will_paginate @recipes %>    
