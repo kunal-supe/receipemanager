@@ -1,0 +1,13 @@
+<%= render 'shared/errors', obj: @style %>
+
+<div class="row">
+  <div class="well col-md-8 col-md-offset-2">
+    <%= form_for @style do |f|  %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+      
+      <%= f.submit(@style.new_record? ? 'Create Style' : 'Edit Style', class: "btn-success") %>
+      
+    <% end %>  
+  </div>
+</div>

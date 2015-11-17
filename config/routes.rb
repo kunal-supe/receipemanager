@@ -18,4 +18,7 @@ Rails.application.routes.draw do
   post '/login', to: 'logins#create'
   get 'logout', to: 'logins#destroy'
   get '/myrecipes', to: 'recipes#myrecipes'
+  
+  resources :styles, only: [:new, :create, :show]
+  resources :ingredients, only: [:new, :create, :show]
 end
