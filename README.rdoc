@@ -1,12 +1,4 @@
-Testing specs for chef:
-
-chefname: string
-email: string
+- Add Admin Functionality
 
 
--- chefname must be present
--- chefname must be between 3 char and < than 40 chars
--- email must be present
--- email must be unique
--- email must be vaild
 

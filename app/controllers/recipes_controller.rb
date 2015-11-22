@@ -2,6 +2,7 @@ class RecipesController < ApplicationController
     before_action :set_recipe, only: [:edit, :update, :show, :like]
     before_action :require_user, except: [:index, :show]
     before_action :require_same_user, only: [:edit, :update]
+    before_action :admin_user, only: :destroy
     
     def index
       @recipes = Recipe.order("total_likes DESC").paginate(page: params[:page], per_page: 4)
@@ -62,6 +63,12 @@ class RecipesController < ApplicationController
       end  
     end  
     
+    def destroy 
+      Recipe.find(params[:id]).destroy
+      flash[:success] = "Recipe Destroyed!"
+      redirect_to recipes_path
+    end  
+    
     private 
       
       def recipe_params
@@ -73,12 +80,17 @@ class RecipesController < ApplicationController
       end  
       
       def require_same_user
-        if current_user != @recipe.chef
+        if current_user != @recipe.chef && !current_user.admin
           flash[:danger] = "You can edit your profile only!"
           redirect_to recipes_path
         end  
       end   
       
-      
+      def admin_user
+        if !current_user.admin?
+          flash[:danger] = "You require admin rights for this action"
+          redirect_to recipes_path
+        end  
+      end  
 
 end
