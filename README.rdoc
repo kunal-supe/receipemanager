@@ -1,4 +1,22 @@
-- Add Admin Functionality
+To-Do
+
+- Reviews Functionality - Using git branch - review
+
+1. Review migration - body, text_area, review_id, chef_id
+2. Review Model - RSpecs, Validations
+3. Build Associations - has_many, belongs_to
+4. Test out associations on rails console
+    -recipe.reviews
+    -chef.reviews
+5. Recipe Show page - Add text_area below.
+6. Config Routes 
+7. Authenticated chefs can create reviews, before_action require_user
+8. You assoicate chef_id, recipe_id
+9. Use Existing code if possible
+10. Pagination - for reviews for each recipes.
+
+
+
 
 
 

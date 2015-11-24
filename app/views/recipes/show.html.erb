@@ -49,6 +49,47 @@
       </div>
     </div>
   </div>
+  <hr />
+  
+<div class="col-md-8 ">
+  <% if @recipe.reviews.exists? %>
+    <h5><%= @recipe.reviews.count %> Reviews:</h5>
+        <% @recipe.reviews.each do |review| %>
+          <div class="well">
+            <%= review.body %> <i class="commentor"><%= review.chef.chefname if review.chef %></i>
+        <% if review.chef == current_user && logged_in? %>     
+           <%= link_to delete_review_recipe_path(@recipe, review: review), method: :post do %>
+             <i class="glyphicon glyphicons-remove-2">delete</i>
+           <% end %>
+        <% end %>   
+
+          </div>
+        <% end %>
+  <% else %>
+       <i>No reviews</i>  
+ <% end %> 
+</div>   
+ 
+  <hr /> 
+  <div class="col-md-8 ">
+  <% if logged_in? %>  
+    <h4>Submit review for this recipe: </h4>
+      <%= render 'shared/errors', obj: @review %>
+      <%= form_for @review, url: {action: "new_review"} do |f|  %>
+        <%= f.label :review %>
+        <%= f.text_area :body, rows: 3 %>
+        <%= f.hidden_field :chef_id, :value => current_user.id %>
+        <%= f.hidden_field :recipe_id, :value => @recipe.id %>
+        
+        <%= f.submit 'Submit Review', :class => "btn-success" %>
+        
+      <% end %> 
+  <% else %>
+    <i>You must log-in to submit a review!</i>
+  <% end %>   
+      
+  </div>    
+  
 </div>
 
 <h5><%= link_to "Return to Recipes", recipes_path, class: "btn btn-warning btn-small" %></h5>

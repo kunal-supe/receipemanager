@@ -3,6 +3,7 @@ class RecipesController < ApplicationController
     before_action :require_user, except: [:index, :show]
     before_action :require_same_user, only: [:edit, :update]
     before_action :admin_user, only: :destroy
+    before_action :require_same_user_review, only: :delete_review
     
     def index
       @recipes = Recipe.order("total_likes DESC").paginate(page: params[:page], per_page: 4)
@@ -13,7 +14,8 @@ class RecipesController < ApplicationController
     end
     
     def show
-      
+      @review = @recipe.reviews.new
+      @recipe = Recipe.find(params[:id])
     end  
     
     def new
@@ -46,6 +48,22 @@ class RecipesController < ApplicationController
       end 
     end
     
+    def new_review
+      review = Review.create(body: params[:review][:body], chef_id: params[:review][:chef_id], recipe_id: params[:review][:recipe_id])
+      if review.save 
+        flash[:success] = "Your review was submitted successfully!"
+        redirect_to :back
+      else 
+        redirect_to :back
+      end  
+    end  
+    
+    def delete_review
+      Review.find(params[:review]).destroy
+      flash[:success] = "Review Destroyed!"
+      redirect_to :back
+    end
+    
     def delete
       
     end  
@@ -62,6 +80,7 @@ class RecipesController < ApplicationController
         redirect_to :back
       end  
     end  
+    
     
     def destroy 
       Recipe.find(params[:id]).destroy
@@ -85,6 +104,14 @@ class RecipesController < ApplicationController
           redirect_to recipes_path
         end  
       end   
+      
+      def require_same_user_review
+        review = Review.find(params[:review])
+        if current_user != review.chef && !current_user.admin
+          flash[:danger] = "You can edit your profile only!"
+          redirect_to :back
+        end  
+      end  
       
       def admin_user
         if !current_user.admin?

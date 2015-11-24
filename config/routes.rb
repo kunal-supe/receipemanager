@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   resources :recipes do
     member do
       post 'like'
+      post 'delete_review'
     end  
 
   end  
@@ -18,7 +19,11 @@ Rails.application.routes.draw do
   post '/login', to: 'logins#create'
   get 'logout', to: 'logins#destroy'
   get '/myrecipes', to: 'recipes#myrecipes'
+  post '/new_review', to: 'recipes#new_review'
+  
+
   
   resources :styles, only: [:new, :create, :show]
   resources :ingredients, only: [:new, :create, :show]
+  
 end
