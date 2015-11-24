@@ -15,7 +15,7 @@ class RecipesController < ApplicationController
     
     def show
       @review = @recipe.reviews.new
-      @recipe = Recipe.find(params[:id])
+      @reviews = Recipe.find(params[:id]).reviews.paginate(page: params[:page], per_page: 5)
     end  
     
     def new
@@ -54,6 +54,7 @@ class RecipesController < ApplicationController
         flash[:success] = "Your review was submitted successfully!"
         redirect_to :back
       else 
+        flash[:danger] = "Review must be more than 10 chars"
         redirect_to :back
       end  
     end  
